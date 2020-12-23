@@ -1,4 +1,4 @@
-package com.motawfik.miniinstagram
+package com.motawfik.minigram
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

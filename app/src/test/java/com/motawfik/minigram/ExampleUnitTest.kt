@@ -1,4 +1,4 @@
-package com.motawfik.miniinstagram
+package com.motawfik.minigram
 
 import org.junit.Test
 

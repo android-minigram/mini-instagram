@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mini Instagram</string>
+    <string name="app_name">Minigram</string>
     <string name="not_connected">Still not connected? SignUp Now</string>
     <string name="sign_in_txt">SIGN IN</string>
     <string name="email_hint">Email</string>

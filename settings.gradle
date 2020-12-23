@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Mini Instagram"
+rootProject.name = "Minigram"
