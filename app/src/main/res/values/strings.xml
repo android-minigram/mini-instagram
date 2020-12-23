@@ -4,4 +4,8 @@
     <string name="sign_in_txt">SIGN IN</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
+    <string name="signup_text">Sign-up</string>
+    <string name="or_splitter">or sign-in using</string>
+    <string name="facebook_sign_in_button_description">Facebook sign-in button</string>
+    <string name="google_sign_in_button_description">Google sign-in button</string>
 </resources>
