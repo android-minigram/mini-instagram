@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.fragment.findNavController
 
-class LoginFragment : Fragment() {
+class SignupFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -17,13 +17,11 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_login, container, false)
-        val signUpBtn = rootView.findViewById<Button>(R.id.signUpBtb)
-        signUpBtn.setOnClickListener {
-            val action = LoginFragmentDirections.actionLoginFragmentToSignupFragment()
-            findNavController().navigate(action)
+        val rootView = inflater.inflate(R.layout.fragment_signup, container, false)
+        val loginBtn = rootView.findViewById<Button>(R.id.loginBtn)
+        loginBtn.setOnClickListener {
+            findNavController().popBackStack()
         }
         return rootView
     }
-
 }
