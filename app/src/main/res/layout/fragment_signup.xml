@@ -15,117 +15,122 @@
             type="com.motawfik.minigram.validators.SignupValidator" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        tools:context=".MainActivity">
+        android:layout_height="match_parent" >
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/sign_up_text"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_margin="10dp"
+            tools:context=".MainActivity">
 
-        <EditText
-            android:id="@+id/fullNameEditText"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="48dp"
-            android:background="@drawable/rounded_corner"
-            android:drawableStart="@drawable/ic_baseline_person_30"
-            android:ems="10"
-            android:hint="@string/full_name_hint"
-            android:text="@={viewModel.userData.fullName}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/sign_up_text"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.501"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/emailEditText"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="48dp"
-            android:background="@drawable/rounded_corner"
-            android:drawableStart="@drawable/ic_baseline_email_30"
-            android:ems="10"
-            android:hint="@string/email_hint"
-            android:inputType="textWebEmailAddress"
-            android:text="@={viewModel.userData.email}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fullNameEditText" />
+            <EditText
+                android:id="@+id/fullNameEditText"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="48dp"
+                android:background="@drawable/rounded_corner"
+                android:drawableStart="@drawable/ic_baseline_person_30"
+                android:ems="10"
+                android:hint="@string/full_name_hint"
+                android:text="@={viewModel.userData.fullName}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-        <EditText
-            android:id="@+id/passwordEditText"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="48dp"
-            android:background="@drawable/rounded_corner"
-            android:drawableStart="@drawable/ic_baseline_lock_30"
-            android:ems="10"
-            android:hint="@string/password_hint"
-            android:inputType="textPassword"
-            android:text="@={viewModel.userData.password}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
+            <EditText
+                android:id="@+id/emailEditText"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="48dp"
+                android:background="@drawable/rounded_corner"
+                android:drawableStart="@drawable/ic_baseline_email_30"
+                android:ems="10"
+                android:hint="@string/email_hint"
+                android:inputType="textWebEmailAddress"
+                android:text="@={viewModel.userData.email}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fullNameEditText" />
 
-        <EditText
-            android:id="@+id/confirmPasswordEditText"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="48dp"
-            android:background="@drawable/rounded_corner"
-            android:drawableStart="@drawable/ic_baseline_lock_30"
-            android:ems="10"
-            android:hint="@string/confirm_password_text"
-            android:inputType="textPassword"
-            android:text="@={viewModel.userData.confirmPassword}"
-            app:layout_constraintBottom_toTopOf="@+id/signupBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
-            app:layout_constraintVertical_bias="0.0" />
+            <EditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="48dp"
+                android:background="@drawable/rounded_corner"
+                android:drawableStart="@drawable/ic_baseline_lock_30"
+                android:ems="10"
+                android:hint="@string/password_hint"
+                android:inputType="textPassword"
+                android:text="@={viewModel.userData.password}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
 
-        <Button
-            android:id="@+id/signupBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/sign_up_text"
-            android:enabled="@{!viewModel.registerLoading &amp;&amp; validator.validForm}"
-            android:onClick="@{() -> viewModel.register()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.751" />
+            <EditText
+                android:id="@+id/confirmPasswordEditText"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="48dp"
+                android:background="@drawable/rounded_corner"
+                android:drawableStart="@drawable/ic_baseline_lock_30"
+                android:ems="10"
+                android:hint="@string/confirm_password_text"
+                android:inputType="textPassword"
+                android:text="@={viewModel.userData.confirmPassword}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
+                app:layout_constraintVertical_bias="0.0" />
 
-        <Button
-            android:id="@+id/loginBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/back_to_login_text"
-            app:backgroundTint="@android:color/holo_green_dark"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/signupBtn"
-            app:layout_constraintVertical_bias="0.207" />
+            <Button
+                android:id="@+id/signupBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:enabled="@{!viewModel.registerLoading &amp;&amp; validator.validForm}"
+                android:onClick="@{() -> viewModel.register()}"
+                android:text="@string/sign_up_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/confirmPasswordEditText" />
+
+            <Button
+                android:id="@+id/loginBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="24dp"
+                android:text="@string/back_to_login_text"
+                app:backgroundTint="@android:color/holo_green_dark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signupBtn"
+                app:layout_constraintVertical_bias="0.207" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </layout>
