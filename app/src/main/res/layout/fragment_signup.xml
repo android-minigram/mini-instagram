@@ -9,6 +9,10 @@
         <variable
             name="viewModel"
             type="com.motawfik.minigram.viewModels.SignupViewModel" />
+
+        <variable
+            name="validator"
+            type="com.motawfik.minigram.validators.SignupValidator" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -100,7 +104,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/sign_up_text"
-            android:enabled="@{!viewModel.registerLoading}"
+            android:enabled="@{!viewModel.registerLoading &amp;&amp; validator.validForm}"
             android:onClick="@{() -> viewModel.register()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

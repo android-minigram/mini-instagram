@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.motawfik.minigram.data.SIGNUP_STATUS
 import com.motawfik.minigram.databinding.SignupFragmentBinding
+import com.motawfik.minigram.validators.SignupValidator
 import com.motawfik.minigram.viewModels.SignupViewModel
 import com.motawfik.minigram.viewModels.ViewModelFactory
 
@@ -25,8 +26,10 @@ class SignupFragment : Fragment() {
 
         val viewModelFactory = ViewModelFactory(application)
         val signupViewModel = ViewModelProvider(this, viewModelFactory).get(SignupViewModel::class.java)
+        val signupValidator = SignupValidator(signupBinding)
 
         signupBinding.viewModel = signupViewModel
+        signupBinding.validator = signupValidator
 
         signupViewModel.signupMessage.observe(viewLifecycleOwner, {
             if (signupViewModel.status.value != SIGNUP_STATUS.NONE) {
