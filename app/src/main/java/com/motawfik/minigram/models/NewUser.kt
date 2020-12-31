@@ -6,4 +6,9 @@ class NewUser {
     var password: String = ""
     var confirmPassword: String = ""
 
+    fun addToFirestore(): HashMap<String, String> {
+        return hashMapOf(
+            "name" to fullName
+        )
+    }
 }

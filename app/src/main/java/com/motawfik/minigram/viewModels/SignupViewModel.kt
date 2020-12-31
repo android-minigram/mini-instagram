@@ -52,8 +52,7 @@ class SignupViewModel(application: Application) : AndroidViewModel(application) 
             var signupStatus: SIGNUP_STATUS
             withContext(Dispatchers.IO) {
                 signupStatus = firebaseAuth.registerWithEmailAndPassword(
-                    userData.value!!.email,
-                    userData.value!!.password
+                    userData.value!!
                 )
             }
             _status.value = signupStatus
