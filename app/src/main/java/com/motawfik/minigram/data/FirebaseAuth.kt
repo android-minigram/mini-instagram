@@ -1,6 +1,8 @@
 package com.motawfik.minigram.data
 
 import android.util.Log
+import com.facebook.AccessToken
+import com.facebook.Profile
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
@@ -13,6 +15,7 @@ import com.motawfik.minigram.models.NewUser
 import kotlinx.coroutines.tasks.await
 
 enum class LOGIN_STATUS { NONE, SUCCESS, NO_USER, INVALID_CREDENTIALS, UNKNOWN_ERROR };
+enum class FACEBOOK_LOGIN_STATUS { NONE, SUCCESS, DUPLICATE_EMAIL, UNKNOWN_ERROR };
 enum class SIGNUP_STATUS { NONE, SUCCESS, DUPLICATE_EMAIL, MALFORMED_EMAIL, WEAK_PASSWORD, UNKNOWN_ERROR };
 
 class FirebaseAuth {
@@ -81,6 +84,27 @@ class FirebaseAuth {
         }
     }
 
+    suspend fun loginWithFacebook(token: AccessToken): FACEBOOK_LOGIN_STATUS {
+        val credential = FacebookAuthProvider.getCredential(token.token)
+
+        return try {
+            firebaseAuth.signInWithCredential(credential).await()
+            val currentUser = firebaseAuth.currentUser
+            return if (currentUser != null) {
+                val profile = Profile.getCurrentProfile()
+                firestore.collection("users")
+                    .document(currentUser.uid)
+                    .set(hashMapOf("name" to profile.name))
+                FACEBOOK_LOGIN_STATUS.SUCCESS
+            } else {
+                FACEBOOK_LOGIN_STATUS.UNKNOWN_ERROR
+            }
+        } catch (e: FirebaseAuthUserCollisionException) {
+            FACEBOOK_LOGIN_STATUS.DUPLICATE_EMAIL
+        } catch (e: Exception) {
+            FACEBOOK_LOGIN_STATUS.UNKNOWN_ERROR
+        }
+    }
 
     fun logout() = firebaseAuth.signOut()
 

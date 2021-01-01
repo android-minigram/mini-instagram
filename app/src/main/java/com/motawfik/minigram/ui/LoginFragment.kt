@@ -1,6 +1,7 @@
 package com.motawfik.minigram.ui
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,13 +12,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.*
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.common.api.internal.GoogleApiManager
-import com.google.firebase.auth.GoogleAuthProvider
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.motawfik.minigram.R
+import com.motawfik.minigram.data.FACEBOOK_LOGIN_STATUS
 import com.motawfik.minigram.data.LOGIN_STATUS
 import com.motawfik.minigram.databinding.LoginFragmentBinding
 import com.motawfik.minigram.viewModels.LoginViewModel
@@ -25,6 +28,7 @@ import com.motawfik.minigram.viewModels.ViewModelFactory
 
 class LoginFragment : Fragment() {
     private var loginViewModel: LoginViewModel? = null
+    private lateinit var callbackManager: CallbackManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,6 +70,45 @@ class LoginFragment : Fragment() {
             }
         })
 
+        loginViewModel!!.facebookLoginMessage.observe(viewLifecycleOwner, {
+            if (loginViewModel!!.facebookStatus.value != FACEBOOK_LOGIN_STATUS.NONE) {
+                Toast.makeText(activity, it.toString(), Toast.LENGTH_LONG).show()
+                loginViewModel!!.finishFacebookLogin()
+            }
+        })
+
+        callbackManager = CallbackManager.Factory.create()
+
+        loginBinding.facebookImgBtn.setOnClickListener {
+            Log.d("FACEBOOK_LOGIN", "BUTTON CLICKED")
+            LoginManager.getInstance()
+                .logInWithReadPermissions(this, listOf("email", "public_profile"))
+
+            LoginManager.getInstance()
+                .registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
+                    override fun onSuccess(result: LoginResult) {
+                        Log.d("FACEBOOK_LOGIN", "SUCCESS")
+                        loginViewModel!!.loginWithFacebook(result)
+                    }
+
+                    override fun onCancel() {
+                        Toast.makeText(
+                            activity,
+                            "Facebook login operation canceled",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    override fun onError(error: FacebookException?) {
+                        Toast.makeText(
+                            activity,
+                            "Error while logging in with facebook",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
+        }
+
         return loginBinding.root
     }
 
@@ -77,4 +120,9 @@ class LoginFragment : Fragment() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        // Pass the activity result back to the Facebook SDK
+        callbackManager.onActivityResult(requestCode, resultCode, data)
+    }
 }

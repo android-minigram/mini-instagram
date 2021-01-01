@@ -14,4 +14,8 @@
     <string name="confirm_password_text">Confirm Password</string>
     <string name="back_to_login_text">Back to Login</string>
     <string name="full_name_hint">Full Name</string>
+
+    <string name="facebook_app_id">894335278059722</string>
+    <string name="fb_login_protocol_scheme">fb894335278059722</string>
+
 </resources>
