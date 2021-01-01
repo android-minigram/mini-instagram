@@ -153,6 +153,7 @@
                 android:background="@drawable/google"
                 android:contentDescription="@string/google_sign_in_button_description"
                 android:scaleType="centerInside"
+                android:onClick="@{() -> viewModel.loginWithGoogleFlag()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/facebookImgBtn"

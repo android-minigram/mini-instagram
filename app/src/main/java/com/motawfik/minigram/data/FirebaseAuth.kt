@@ -1,6 +1,9 @@
 package com.motawfik.minigram.data
 
 import android.util.Log
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -52,6 +55,29 @@ class FirebaseAuth {
             SIGNUP_STATUS.MALFORMED_EMAIL
         } catch (e: Exception) {
             SIGNUP_STATUS.UNKNOWN_ERROR
+        }
+    }
+
+    suspend fun loginWithGoogle(task: Task<GoogleSignInAccount>) {
+        try {
+            val account = task.getResult(ApiException::class.java)
+            if (account != null) {
+                val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                firebaseAuth.signInWithCredential(credential).await()
+                val currentUser = firebaseAuth.currentUser
+                if (currentUser != null) {
+                    firestore.collection("users")
+                        .document(currentUser.uid)
+                        .set(
+                            hashMapOf(
+                                "name" to account.displayName
+                            )
+                        )
+                }
+            }
+        } catch (e: ApiException) {
+            Log.d("GOOGLE_LOGIN", e.toString())
+            Log.d("GOOGLE_LOGIN", e.printStackTrace().toString())
         }
     }
 

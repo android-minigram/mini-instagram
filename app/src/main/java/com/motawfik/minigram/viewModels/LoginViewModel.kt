@@ -1,10 +1,15 @@
 package com.motawfik.minigram.viewModels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.GoogleAuthProvider
 import com.motawfik.minigram.data.FirebaseAuth
 import com.motawfik.minigram.data.LOGIN_STATUS
 import kotlinx.coroutines.*
@@ -39,6 +44,10 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     val loginLoading: LiveData<Boolean>
         get() = _loginLoading
 
+    private var _googleLogin = MutableLiveData<Boolean>()
+    val googleLogin: LiveData<Boolean>
+        get() = _googleLogin
+
     private val firebaseAuth = FirebaseAuth()
 
     init {
@@ -57,6 +66,22 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             _loggedIn.value = status
             _loginLoading.value = false
         }
+    }
+
+    fun loginWithGoogleFlag() {
+        _googleLogin.value = true
+    }
+    fun finishLoggingWithGoogle() {
+        _googleLogin.value = false
+    }
+
+    fun loginWithGoogle(task: Task<GoogleSignInAccount>) {
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                firebaseAuth.loginWithGoogle(task)
+            }
+        }
+
     }
 
     fun finishedLoggingIn() {
