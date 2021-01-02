@@ -17,5 +17,6 @@
 
     <string name="facebook_app_id">894335278059722</string>
     <string name="fb_login_protocol_scheme">fb894335278059722</string>
+    <string name="add_image_button_description">Add Image Button</string>
 
 </resources>

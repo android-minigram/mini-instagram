@@ -1,19 +1,82 @@
 package com.motawfik.minigram.ui
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.motawfik.minigram.R
+import com.motawfik.minigram.databinding.TimelineFragmentBinding
+import com.motawfik.minigram.viewModels.TimelineViewModel
+import com.motawfik.minigram.viewModels.ViewModelFactory
 
 
 class TimelineFragment : Fragment() {
+    private lateinit var binding: TimelineFragmentBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_timeline, container, false)
+        val application = requireNotNull(this.activity).application
+        binding = TimelineFragmentBinding.inflate(inflater)
+        binding.lifecycleOwner = this
+
+        val viewModelFactory = ViewModelFactory(application)
+        val viewModel = ViewModelProvider(this, viewModelFactory).get(TimelineViewModel::class.java)
+        binding.viewModel = viewModel
+
+
+        binding.speedDial.addAllActionItems(listOf(
+            SpeedDialActionItem.Builder(R.id.fab_upload, R.drawable.ic_baseline_add_a_photo_24)
+                .setLabel("Take New Photo")
+                .setLabelClickable(false)
+                .setFabImageTintColor(Color.WHITE)
+                .create(),
+            SpeedDialActionItem.Builder(R.id.fab_pick, R.drawable.ic_baseline_add_photo_alternate_24)
+                .setLabel("Upload Photo")
+                .setLabelClickable(false)
+                .setFabImageTintColor(Color.WHITE)
+                .create()
+        ))
+
+        binding.speedDial.setOnActionSelectedListener { item ->
+            when(item.id) {
+                R.id.fab_upload -> {
+                    val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    imagePickerLauncher.launch(takePicture)
+                    binding.speedDial.close()
+                    return@setOnActionSelectedListener true
+                }
+                R.id.fab_pick -> {
+                    val pickPhoto = Intent(
+                        Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    )
+                    imagePickerLauncher.launch(pickPhoto)
+                    binding.speedDial.close()
+                    return@setOnActionSelectedListener true
+                }
+            }
+            false
+        }
+
+        return binding.root
+    }
+
+    private var imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val intent = result.data
+            val uri = intent?.data
+            binding.imageView.setImageURI(uri)
+
+        }
     }
 }

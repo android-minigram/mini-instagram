@@ -12,6 +12,9 @@ class ViewModelFactory(val app: Application): ViewModelProvider.Factory {
         if (modelClass.isAssignableFrom(SignupViewModel::class.java)) {
             return SignupViewModel(app) as T
         }
+        if (modelClass.isAssignableFrom(TimelineViewModel::class.java)) {
+            return TimelineViewModel(app) as T
+        }
         throw IllegalArgumentException("UNABLE TO CONSTRUCT VIEW MODEL")
     }
 
