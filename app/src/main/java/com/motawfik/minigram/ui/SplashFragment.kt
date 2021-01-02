@@ -17,7 +17,7 @@ class SplashFragment : Fragment() {
 
         val firebaseAuth = FirebaseAuth()
         if (firebaseAuth.isLoggedIn()) {
-            findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToProfileFragment())
+            findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToTimelineFragment())
         } else {
             findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToLoginFragment())
         }
