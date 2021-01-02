@@ -51,6 +51,9 @@ class LoginFragment : Fragment() {
         loginViewModel!!.loginMessage.observe(viewLifecycleOwner, {
             if (loginViewModel!!.loggedIn.value != LOGIN_STATUS.NONE) {
                 Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
+                if (loginViewModel!!.loggedIn.value == LOGIN_STATUS.SUCCESS) {
+                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToProfileFragment())
+                }
                 loginViewModel!!.finishedLoggingIn()
             }
         })

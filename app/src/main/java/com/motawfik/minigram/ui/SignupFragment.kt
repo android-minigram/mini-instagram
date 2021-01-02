@@ -34,6 +34,9 @@ class SignupFragment : Fragment() {
         signupViewModel.signupMessage.observe(viewLifecycleOwner, {
             if (signupViewModel.status.value != SIGNUP_STATUS.NONE) {
                 Toast.makeText(activity, it.toString(), Toast.LENGTH_SHORT).show()
+                if (signupViewModel.status.value == SIGNUP_STATUS.SUCCESS) {
+                    findNavController().navigate(SignupFragmentDirections.actionSignupFragmentToProfileFragment())
+                }
                 signupViewModel.finishedSignup()
             }
         })
