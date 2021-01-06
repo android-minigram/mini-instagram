@@ -1,4 +1,4 @@
-package com.motawfik.minigram.ui
+package com.motawfik.minigram.signup
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,8 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.motawfik.minigram.data.SIGNUP_STATUS
 import com.motawfik.minigram.databinding.SignupFragmentBinding
-import com.motawfik.minigram.validators.SignupValidator
-import com.motawfik.minigram.viewModels.SignupViewModel
 import com.motawfik.minigram.viewModels.ViewModelFactory
 
 class SignupFragment : Fragment() {

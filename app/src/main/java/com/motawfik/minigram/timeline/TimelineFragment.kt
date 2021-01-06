@@ -1,4 +1,4 @@
-package com.motawfik.minigram.ui
+package com.motawfik.minigram.timeline
 
 import android.app.Activity
 import android.content.Intent
@@ -15,7 +15,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.motawfik.minigram.R
 import com.motawfik.minigram.databinding.TimelineFragmentBinding
-import com.motawfik.minigram.viewModels.TimelineViewModel
 import com.motawfik.minigram.viewModels.ViewModelFactory
 
 

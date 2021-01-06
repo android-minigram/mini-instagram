@@ -1,4 +1,4 @@
-package com.motawfik.minigram.validators
+package com.motawfik.minigram.signup
 
 import android.text.Editable
 import android.text.TextWatcher

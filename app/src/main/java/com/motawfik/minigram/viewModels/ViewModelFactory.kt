@@ -3,6 +3,9 @@ package com.motawfik.minigram.viewModels
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.motawfik.minigram.login.LoginViewModel
+import com.motawfik.minigram.signup.SignupViewModel
+import com.motawfik.minigram.timeline.TimelineViewModel
 
 class ViewModelFactory(val app: Application): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

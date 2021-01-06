@@ -1,14 +1,12 @@
-package com.motawfik.minigram.viewModels
+package com.motawfik.minigram.signup
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.motawfik.minigram.data.FirebaseAuth
 import com.motawfik.minigram.data.SIGNUP_STATUS
-import com.motawfik.minigram.models.NewUser
 import kotlinx.coroutines.*
 
 class SignupViewModel(application: Application) : AndroidViewModel(application) {

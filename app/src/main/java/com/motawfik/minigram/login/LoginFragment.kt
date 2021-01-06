@@ -1,4 +1,4 @@
-package com.motawfik.minigram.ui
+package com.motawfik.minigram.login
 
 import android.app.Activity
 import android.content.Intent
@@ -23,7 +23,6 @@ import com.motawfik.minigram.R
 import com.motawfik.minigram.data.FACEBOOK_LOGIN_STATUS
 import com.motawfik.minigram.data.LOGIN_STATUS
 import com.motawfik.minigram.databinding.LoginFragmentBinding
-import com.motawfik.minigram.viewModels.LoginViewModel
 import com.motawfik.minigram.viewModels.ViewModelFactory
 
 class LoginFragment : Fragment() {

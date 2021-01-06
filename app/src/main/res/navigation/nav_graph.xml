@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.motawfik.minigram.ui.LoginFragment"
+        android:name="com.motawfik.minigram.login.LoginFragment"
         android:label="fragment_blank"
         tools:layout="@layout/fragment_login" >
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
-        android:name="com.motawfik.minigram.ui.SignupFragment"
+        android:name="com.motawfik.minigram.signup.SignupFragment"
         android:label="fragment_signup"
         tools:layout="@layout/fragment_signup" >
         <action
@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/timelineFragment"
-        android:name="com.motawfik.minigram.ui.TimelineFragment"
+        android:name="com.motawfik.minigram.timeline.TimelineFragment"
         android:label="fragment_timeline"
         tools:layout="@layout/fragment_timeline" />
     <fragment

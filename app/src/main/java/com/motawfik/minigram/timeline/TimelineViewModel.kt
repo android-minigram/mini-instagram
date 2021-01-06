@@ -1,4 +1,4 @@
-package com.motawfik.minigram.viewModels
+package com.motawfik.minigram.timeline
 
 import android.app.Application
 import android.graphics.Bitmap

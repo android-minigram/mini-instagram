@@ -8,11 +8,11 @@
     <data class="SignupFragmentBinding">
         <variable
             name="viewModel"
-            type="com.motawfik.minigram.viewModels.SignupViewModel" />
+            type="com.motawfik.minigram.signup.SignupViewModel" />
 
         <variable
             name="validator"
-            type="com.motawfik.minigram.validators.SignupValidator" />
+            type="com.motawfik.minigram.signup.SignupValidator" />
     </data>
 
     <ScrollView

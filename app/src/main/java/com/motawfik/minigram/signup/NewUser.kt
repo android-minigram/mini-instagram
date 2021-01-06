@@ -1,4 +1,4 @@
-package com.motawfik.minigram.models
+package com.motawfik.minigram.signup
 
 class NewUser {
     var fullName: String = ""

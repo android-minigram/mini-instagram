@@ -6,7 +6,7 @@
     <data class="LoginFragmentBinding">
         <variable
             name="viewModel"
-            type="com.motawfik.minigram.viewModels.LoginViewModel"/>
+            type="com.motawfik.minigram.login.LoginViewModel"/>
     </data>
 
     <ScrollView
