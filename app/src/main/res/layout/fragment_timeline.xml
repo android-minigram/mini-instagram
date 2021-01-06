@@ -10,58 +10,37 @@
             type="com.motawfik.minigram.timeline.TimelineViewModel" />
     </data>
 
-    <ScrollView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        tools:context=".MainActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/posts_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <com.leinardi.android.speeddial.SpeedDialView
+            android:id="@+id/speedDial"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:context=".MainActivity">
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/com_facebook_tooltip_blue_xout"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-            <!--                android:id="@+id/addBtn"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginBottom="16dp"-->
-            <!--                android:clickable="true"-->
-            <!--                android:contentDescription="@string/add_image_button_description"-->
-            <!--                android:focusable="true"-->
-            <!--                android:scaleType="center"-->
-            <!--                android:src="@drawable/ic_baseline_add_a_photo_30"-->
-            <!--                android:onClick="@{() -> viewModel.startUpload()}"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintHorizontal_bias="0.954"-->
-            <!--                app:layout_constraintStart_toStartOf="parent" />-->
-
-            <com.leinardi.android.speeddial.SpeedDialView
-                android:id="@+id/speedDial"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.959"
-                app:layout_constraintStart_toStartOf="parent"
-                app:sdMainFabClosedBackgroundColor="@color/purple_200"
-                app:sdMainFabClosedSrc="@drawable/ic_baseline_add_30" />
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.959"
+            app:layout_constraintStart_toStartOf="parent"
+            app:sdMainFabClosedBackgroundColor="@color/purple_200"
+            app:sdMainFabClosedSrc="@drawable/ic_baseline_add_30" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

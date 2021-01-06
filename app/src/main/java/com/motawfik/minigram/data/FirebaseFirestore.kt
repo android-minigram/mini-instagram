@@ -1,6 +1,5 @@
 package com.motawfik.minigram.data
 
-import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -20,5 +19,11 @@ class FirebaseFirestore {
         firestore.collection("posts")
             .add(post.addToFirestore())
             .await()
+    }
+
+    suspend fun getPosts(): List<Post> {
+        val data = firestore.collection("posts")
+            .get().await()
+        return data.toObjects(Post::class.java)
     }
 }
