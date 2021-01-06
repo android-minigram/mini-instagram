@@ -7,6 +7,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import com.motawfik.minigram.models.Post
 import kotlinx.coroutines.tasks.await
@@ -40,5 +41,9 @@ class FirebaseStorage {
     private suspend fun createPost(path: String, uid: String) {
         val post = Post(path, uid)
         firestore.createPost(post)
+    }
+
+    fun getPathReference(imagePath: String): StorageReference {
+        return storage.reference.child(imagePath)
     }
 }
