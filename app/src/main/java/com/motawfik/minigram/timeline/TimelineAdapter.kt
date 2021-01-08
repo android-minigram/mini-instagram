@@ -43,6 +43,8 @@ class PostDiffCallback: DiffUtil.ItemCallback<Post>() {
 
     override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
         return oldItem == newItem
+                && oldItem.likedBy.containsAll(newItem.likedBy)
+                && newItem.likedBy.containsAll(oldItem.likedBy)
     }
 
 }

@@ -81,7 +81,6 @@ class TimelineFragment : Fragment() {
             viewModel.likePost(postID)
         })
         binding.postsList.adapter = adapter
-        viewModel.getPosts()
         viewModel.posts.observe(viewLifecycleOwner, {
             it?.let {
                 adapter.submitList(it)

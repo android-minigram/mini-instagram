@@ -1,5 +1,8 @@
 package com.motawfik.minigram.data
 
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -13,6 +16,14 @@ class FirebaseFirestore {
     }
     private val firebaseAuth = FirebaseAuth()
 
+    private val _posts = MutableLiveData<List<Post>>()
+    val posts: LiveData<List<Post>>
+        get() = _posts
+
+    init {
+        getPosts()
+    }
+
     suspend fun createPost(post: Post) {
         val user = firestore.collection("users")
             .document(post.uid)
@@ -23,10 +34,15 @@ class FirebaseFirestore {
             .await()
     }
 
-    suspend fun getPosts(): List<Post> {
-        val data = firestore.collection("posts")
-            .get().await()
-        return data.toObjects(Post::class.java)
+    private fun getPosts() {
+        firestore.collection("posts").addSnapshotListener { data, error ->
+            if (error != null) {
+                Log.w("SNAPSHOT_ERROR", error)
+                return@addSnapshotListener
+            }
+            _posts.value = data?.toObjects(Post::class.java)
+        }
+
     }
 
     fun likePost(postID: String) {

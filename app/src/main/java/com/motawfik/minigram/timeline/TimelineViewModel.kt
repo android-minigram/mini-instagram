@@ -24,9 +24,7 @@ class TimelineViewModel(application: Application) : AndroidViewModel(application
         viewModelJob.cancel() // to cancel all coroutines when the view model is terminated
     }
 
-    private var _posts = MutableLiveData<List<Post>>()
-    val posts: LiveData<List<Post>>
-        get() = _posts
+    val posts = firebaseFirestore.posts
 
     fun uploadNewImage(bitmap: Bitmap) {
         val bytesStream = ByteArrayOutputStream()
@@ -44,16 +42,6 @@ class TimelineViewModel(application: Application) : AndroidViewModel(application
             withContext(Dispatchers.IO) {
                 val path = firebaseStorage.uploadSavedImage(uri)
             }
-        }
-    }
-
-    fun getPosts() {
-        uiScope.launch {
-            var retrievedPosts: List<Post>
-            withContext(Dispatchers.IO) {
-                retrievedPosts = firebaseFirestore.getPosts()
-            }
-            _posts.value = retrievedPosts
         }
     }
 
