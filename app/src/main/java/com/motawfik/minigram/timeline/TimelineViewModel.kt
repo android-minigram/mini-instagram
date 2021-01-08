@@ -4,6 +4,7 @@ import android.app.Application
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
+import com.motawfik.minigram.data.FirebaseAuth
 import com.motawfik.minigram.data.FirebaseFirestore
 import com.motawfik.minigram.data.FirebaseStorage
 import kotlinx.coroutines.*
@@ -16,6 +17,10 @@ class TimelineViewModel(application: Application) : AndroidViewModel(application
 
     private val firebaseStorage = FirebaseStorage()
     private val firebaseFirestore = FirebaseFirestore()
+
+    private val firebaseAuth = FirebaseAuth()
+    val currentUser = firebaseAuth.currentUser
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel() // to cancel all coroutines when the view model is terminated

@@ -1,6 +1,8 @@
 package com.motawfik.minigram.data
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.facebook.AccessToken
 import com.facebook.Profile
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -26,6 +28,14 @@ class FirebaseAuth {
         Firebase.firestore
     }
 
+    init {
+        firebaseAuth.addAuthStateListener {
+            _currentUser.value = it.currentUser
+        }
+    }
+    private val _currentUser = MutableLiveData<FirebaseUser?>()
+    val currentUser: LiveData<FirebaseUser?>
+        get() = _currentUser
 
     suspend fun loginWithEmailAndPassword(email: String, password: String): LOGIN_STATUS {
         return try {
@@ -111,8 +121,6 @@ class FirebaseAuth {
     }
 
     fun logout() = firebaseAuth.signOut()
-
-    fun currentUser() = firebaseAuth.currentUser
 
     fun currentUserID() = firebaseAuth.currentUser?.uid
 

@@ -22,4 +22,6 @@
 
     <string name="post_number_of_likes">%d Likes</string>
     <string name="post_single_like">1 Like</string>
+
+    <string name="action_logout">Logout Button</string>
 </resources>

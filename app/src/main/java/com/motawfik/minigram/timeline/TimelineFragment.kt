@@ -6,13 +6,11 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.leinardi.android.speeddial.SpeedDialActionItem
 import com.motawfik.minigram.R
 import com.motawfik.minigram.databinding.TimelineFragmentBinding
@@ -83,6 +81,12 @@ class TimelineFragment : Fragment() {
         viewModel.posts.observe(viewLifecycleOwner, {
             it?.let {
                 adapter.submitList(it)
+            }
+        })
+
+        viewModel.currentUser.observe(viewLifecycleOwner, {
+            if (it == null) {
+                findNavController().navigate(TimelineFragmentDirections.actionTimelineFragmentToLoginFragment())
             }
         })
 
