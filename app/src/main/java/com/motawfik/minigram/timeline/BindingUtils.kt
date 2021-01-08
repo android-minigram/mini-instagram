@@ -31,7 +31,7 @@ fun TextView.setTimePassed(timestamp: Timestamp) {
 fun ImageView.setLikeButtonColor(post: Post?) {
     post?.let {
         val auth = FirebaseAuth()
-        if (post.likedBy.contains(auth.currentUser()?.uid))
+        if (post.likedBy.contains(auth.currentUserID()))
             setBackgroundResource(R.drawable.ic_baseline_favorite_30_red)
         else
             setBackgroundResource(R.drawable.ic_outline_favorite_border_30)

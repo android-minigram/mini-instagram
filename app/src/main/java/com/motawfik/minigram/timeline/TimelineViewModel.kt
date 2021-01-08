@@ -4,11 +4,8 @@ import android.app.Application
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.motawfik.minigram.data.FirebaseFirestore
 import com.motawfik.minigram.data.FirebaseStorage
-import com.motawfik.minigram.models.Post
 import kotlinx.coroutines.*
 import java.io.ByteArrayOutputStream
 
@@ -45,7 +42,10 @@ class TimelineViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun likePost(postID: String) {
-        firebaseFirestore.likePost(postID)
+    fun handleLikeButtonClicked(postID: String, isPostLiked: Boolean) {
+        if (isPostLiked)
+            firebaseFirestore.unlikePost(postID)
+        else
+            firebaseFirestore.likePost(postID)
     }
 }

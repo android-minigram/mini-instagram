@@ -49,4 +49,8 @@ class FirebaseFirestore {
         firestore.collection("posts").document(postID)
             .update("likedBy", FieldValue.arrayUnion(firebaseAuth.currentUserID()))
     }
+    fun unlikePost(postID: String) {
+        firestore.collection("posts").document(postID)
+            .update("likedBy", FieldValue.arrayRemove(firebaseAuth.currentUserID()))
+    }
 }

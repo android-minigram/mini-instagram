@@ -1,10 +1,12 @@
 package com.motawfik.minigram.timeline
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.motawfik.minigram.data.FirebaseAuth
 import com.motawfik.minigram.databinding.ListItemPostBinding
 import com.motawfik.minigram.models.Post
 
@@ -50,10 +52,12 @@ class PostDiffCallback: DiffUtil.ItemCallback<Post>() {
 }
 
 
-class PostListener(val clickListener: (postID: String) -> Unit) {
+class PostListener(val clickListener: (postID: String, like: Boolean) -> Unit) {
+    private val firebaseAuth = FirebaseAuth()
     fun onLongClick(post: Post): Boolean {
-        clickListener(post.id)
+        val isPostLiked = post.likedBy.contains(firebaseAuth.currentUserID())
+        clickListener(post.id, isPostLiked)
         return false
     }
-    fun onLikeButtonPressed(post: Post) = clickListener(post.id)
+    fun onLikeButtonPressed(post: Post) = clickListener(post.id, post.likedBy.contains(firebaseAuth.currentUserID()))
 }
