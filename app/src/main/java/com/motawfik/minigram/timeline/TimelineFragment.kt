@@ -76,8 +76,8 @@ class TimelineFragment : Fragment() {
         }
 
 
-        val adapter = TimelineAdapter(PostListener { postID, isPostLiked ->
-            viewModel.handleLikeButtonClicked(postID, isPostLiked)
+        val adapter = TimelineAdapter(PostListener { postID, authorID, isPostLiked ->
+            viewModel.handleLikeButtonClicked(postID, authorID, isPostLiked)
         })
         binding.postsList.adapter = adapter
         viewModel.posts.observe(viewLifecycleOwner, {

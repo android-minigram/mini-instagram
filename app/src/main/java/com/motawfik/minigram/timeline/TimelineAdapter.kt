@@ -52,12 +52,12 @@ class PostDiffCallback: DiffUtil.ItemCallback<Post>() {
 }
 
 
-class PostListener(val clickListener: (postID: String, like: Boolean) -> Unit) {
+class PostListener(val clickListener: (postID: String, authorID: String, like: Boolean) -> Unit) {
     private val firebaseAuth = FirebaseAuth()
     fun onLongClick(post: Post): Boolean {
         val isPostLiked = post.likedBy.contains(firebaseAuth.currentUserID())
-        clickListener(post.id, isPostLiked)
+        clickListener(post.id, post.uid, isPostLiked)
         return false
     }
-    fun onLikeButtonPressed(post: Post) = clickListener(post.id, post.likedBy.contains(firebaseAuth.currentUserID()))
+    fun onLikeButtonPressed(post: Post) = clickListener(post.id, post.uid, post.likedBy.contains(firebaseAuth.currentUserID()))
 }

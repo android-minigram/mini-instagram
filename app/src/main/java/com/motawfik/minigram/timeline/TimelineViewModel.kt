@@ -47,11 +47,11 @@ class TimelineViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun handleLikeButtonClicked(postID: String, isPostLiked: Boolean) {
+    fun handleLikeButtonClicked(postID: String, authorID: String, isPostLiked: Boolean) {
         if (isPostLiked)
             firebaseFirestore.unlikePost(postID)
         else
-            firebaseFirestore.likePost(postID)
+            firebaseFirestore.likePost(postID, authorID)
     }
 
     fun saveFCMToken(fcmToken: String) {

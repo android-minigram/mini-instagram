@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.motawfik.minigram.models.Notification
 import com.motawfik.minigram.models.Post
 import kotlinx.coroutines.tasks.await
 
@@ -45,13 +46,24 @@ class FirebaseFirestore {
 
     }
 
-    fun likePost(postID: String) {
+    fun likePost(postID: String, authorID: String) {
+        val currentUserID = firebaseAuth.currentUserID()
         firestore.collection("posts").document(postID)
-            .update("likedBy", FieldValue.arrayUnion(firebaseAuth.currentUserID()))
+            .update("likedBy", FieldValue.arrayUnion(currentUserID))
+        val likeNotification = Notification(postID, currentUserID!!, authorID, "like")
+        firestore.collection("notifications")
+            .add(likeNotification.addToFirestore())
     }
     fun unlikePost(postID: String) {
+        val currentUserID = firebaseAuth.currentUserID()
         firestore.collection("posts").document(postID)
             .update("likedBy", FieldValue.arrayRemove(firebaseAuth.currentUserID()))
+        firestore.collection("notifications").whereEqualTo("postID", postID)
+            .whereEqualTo("likedByUserID", currentUserID).get().addOnSuccessListener { documents ->
+                documents.forEach{
+                    it.reference.delete()
+                }
+            }
     }
 
     fun saveFCMToken(fcmToken: String) {
