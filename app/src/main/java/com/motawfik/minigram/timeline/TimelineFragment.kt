@@ -1,11 +1,13 @@
 package com.motawfik.minigram.timeline
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -89,6 +91,13 @@ class TimelineFragment : Fragment() {
                 findNavController().navigate(TimelineFragmentDirections.actionTimelineFragmentToLoginFragment())
             }
         })
+
+        val sharedPrefs = activity?.getSharedPreferences(
+            getString(R.string.shared_prefs_file), Context.MODE_PRIVATE)
+        val fcm = sharedPrefs?.getString(getString(R.string.fcm_token_key), null)
+        fcm?.let {
+            viewModel.saveFCMToken(it)
+        }
 
 
         return binding.root

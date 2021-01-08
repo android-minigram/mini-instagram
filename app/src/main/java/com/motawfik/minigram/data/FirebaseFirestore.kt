@@ -53,4 +53,17 @@ class FirebaseFirestore {
         firestore.collection("posts").document(postID)
             .update("likedBy", FieldValue.arrayRemove(firebaseAuth.currentUserID()))
     }
+
+    fun saveFCMToken(fcmToken: String) {
+        firestore.collection("users")
+            .document(firebaseAuth.currentUserID()!!)
+            .update("fcmToken", fcmToken)
+    }
+    fun deleteFCMToken() {
+        firestore.collection("users")
+            .document(firebaseAuth.currentUserID()!!)
+            .update(hashMapOf<String, Any>(
+                "fcmToken" to FieldValue.delete()
+            ))
+    }
 }

@@ -53,4 +53,8 @@ class TimelineViewModel(application: Application) : AndroidViewModel(application
         else
             firebaseFirestore.likePost(postID)
     }
+
+    fun saveFCMToken(fcmToken: String) {
+        firebaseFirestore.saveFCMToken(fcmToken)
+    }
 }

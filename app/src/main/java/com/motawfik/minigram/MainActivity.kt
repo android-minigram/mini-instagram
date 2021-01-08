@@ -5,10 +5,12 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.motawfik.minigram.data.FirebaseAuth
+import com.motawfik.minigram.data.FirebaseFirestore
 
 
 class MainActivity : AppCompatActivity() {
     private val firebaseAuth = FirebaseAuth()
+    private val firebaseFirestore = FirebaseFirestore()
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Minigram)
         super.onCreate(savedInstanceState)
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_logout -> {
+                firebaseFirestore.deleteFCMToken()
                 firebaseAuth.logout()
                 true
             }

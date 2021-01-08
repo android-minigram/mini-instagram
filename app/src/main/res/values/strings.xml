@@ -24,4 +24,9 @@
     <string name="post_single_like">1 Like</string>
 
     <string name="action_logout">Logout Button</string>
+
+    <string name="shared_prefs_file">shared_prefs</string>
+    <string name="fcm_token_key">fcm_token</string>
+    <string name="likes_notification_channel_id" translatable="false">fcm_likes_channel</string>
+    <string name="likes_notification_channel_name" translatable="true">Likes</string>
 </resources>
