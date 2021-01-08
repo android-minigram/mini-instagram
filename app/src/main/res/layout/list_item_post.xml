@@ -80,6 +80,18 @@
             app:layout_constraintTop_toBottomOf="@+id/post_image"
             tools:background="@drawable/ic_baseline_favorite_30_red"/>
 
+        <TextView
+            android:id="@+id/numLikes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="12dp"
+            android:textStyle="bold"
+            app:numberOfLikes="@{post}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/likeButton"
+            tools:text="43 Likes" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

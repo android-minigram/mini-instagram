@@ -37,3 +37,15 @@ fun ImageView.setLikeButtonColor(post: Post?) {
             setBackgroundResource(R.drawable.ic_outline_favorite_border_30)
     }
 }
+
+@BindingAdapter("numberOfLikes")
+fun TextView.numberOfLikes(post: Post?) {
+    post?.let {
+        val numberOfLikes = post.likedBy.size
+        text = if (numberOfLikes == 1) {
+            context.getString(R.string.post_single_like)
+        } else {
+            context.getString(R.string.post_number_of_likes, numberOfLikes)
+        }
+    }
+}

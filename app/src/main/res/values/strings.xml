@@ -20,4 +20,6 @@
     <string name="add_image_button_description">Add Image Button</string>
     <string name="post_image_description">Post Image</string>
 
+    <string name="post_number_of_likes">%d Likes</string>
+    <string name="post_single_like">1 Like</string>
 </resources>
