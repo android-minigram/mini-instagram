@@ -60,11 +60,25 @@
             android:contentDescription="@string/post_image_description"
             android:padding="4dp"
             android:scaleType="fitCenter"
+            android:longClickable="true"
+            android:onLongClick="@{() -> clickListener.onLongClick(post)}"
             app:displayImage="@{post.path}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
             tools:src="@tools:sample/backgrounds/scenic" />
+
+        <ImageButton
+            android:id="@+id/likeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:onClick="@{() -> clickListener.onLikeButtonPressed(post)}"
+            app:likeButton="@{post}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/post_image"
+            tools:background="@drawable/ic_baseline_favorite_30_red"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

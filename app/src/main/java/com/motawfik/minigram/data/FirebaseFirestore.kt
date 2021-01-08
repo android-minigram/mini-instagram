@@ -1,5 +1,6 @@
 package com.motawfik.minigram.data
 
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -10,6 +11,7 @@ class FirebaseFirestore {
     private val firestore: FirebaseFirestore by lazy {
         Firebase.firestore
     }
+    private val firebaseAuth = FirebaseAuth()
 
     suspend fun createPost(post: Post) {
         val user = firestore.collection("users")
@@ -25,5 +27,10 @@ class FirebaseFirestore {
         val data = firestore.collection("posts")
             .get().await()
         return data.toObjects(Post::class.java)
+    }
+
+    fun likePost(postID: String) {
+        firestore.collection("posts").document(postID)
+            .update("likedBy", FieldValue.arrayUnion(firebaseAuth.currentUserID()))
     }
 }

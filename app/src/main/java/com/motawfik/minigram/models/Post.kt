@@ -1,13 +1,16 @@
 package com.motawfik.minigram.models
 
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentId
 import kotlin.collections.HashMap
 
 class Post {
+    @DocumentId
+    var id = ""
     var path = ""
     var uid = ""
-    var id = ""
     var userFullName = ""
+    var likedBy = listOf<String>()
     lateinit var timestamp: Timestamp
     fun addToFirestore(): HashMap<String, Any> {
         return hashMapOf(

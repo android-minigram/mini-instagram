@@ -114,4 +114,6 @@ class FirebaseAuth {
 
     fun currentUser() = firebaseAuth.currentUser
 
+    fun currentUserID() = firebaseAuth.currentUser?.uid
+
 }

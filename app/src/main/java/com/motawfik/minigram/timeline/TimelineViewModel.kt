@@ -56,4 +56,8 @@ class TimelineViewModel(application: Application) : AndroidViewModel(application
             _posts.value = retrievedPosts
         }
     }
+
+    fun likePost(postID: String) {
+        firebaseFirestore.likePost(postID)
+    }
 }

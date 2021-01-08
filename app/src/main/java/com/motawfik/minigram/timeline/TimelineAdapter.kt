@@ -49,5 +49,9 @@ class PostDiffCallback: DiffUtil.ItemCallback<Post>() {
 
 
 class PostListener(val clickListener: (postID: String) -> Unit) {
-    fun onClick(post: Post) = clickListener(post.id)
+    fun onLongClick(post: Post): Boolean {
+        clickListener(post.id)
+        return false
+    }
+    fun onLikeButtonPressed(post: Post) = clickListener(post.id)
 }
