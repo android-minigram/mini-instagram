@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.motawfik.minigram.data.FirebaseFirestore
 import com.motawfik.minigram.models.Post
+import com.motawfik.minigram.models.UserBasicData
 import kotlinx.coroutines.*
 
 class ProfileViewModel : ViewModel() {
@@ -21,10 +22,22 @@ class ProfileViewModel : ViewModel() {
     val userPosts: LiveData<List<Post>>
         get() = _userPosts
 
+    private val _user = MutableLiveData<UserBasicData>()
+    val user: LiveData<UserBasicData>
+        get() = _user
+
     fun getPostsByUserID(userID: String) {
         uiScope.launch {
             withContext(Dispatchers.IO) {
                 _userPosts.postValue(firebaseFirestore.getPostsByUserID(userID))
+            }
+        }
+    }
+
+    fun getUserByUserID(userID: String) {
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                _user.postValue(firebaseFirestore.getUsersByIDs(listOf(userID))[0])
             }
         }
     }

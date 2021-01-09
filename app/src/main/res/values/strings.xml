@@ -29,4 +29,7 @@
     <string name="fcm_token_key">fcm_token</string>
     <string name="likes_notification_channel_id" translatable="false">fcm_likes_channel</string>
     <string name="likes_notification_channel_name" translatable="true">Likes</string>
+
+    <string name="user_full_name">User: %s</string>
+    <string name="user_total_posts">Total Posts: %d</string>
 </resources>

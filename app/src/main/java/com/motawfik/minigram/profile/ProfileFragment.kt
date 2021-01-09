@@ -22,13 +22,14 @@ class ProfileFragment : Fragment() {
         val viewModel = ProfileViewModel()
         profileBinding.viewModel = viewModel
 
-        val adapter = ProfileGridAdapter(PostListener {post ->
+        val adapter = ProfileGridAdapter(PostListener { post ->
             Log.d("PROFILE_GRID", post.id)
         })
         profileBinding.photosGrid.adapter = adapter
 
         val userID = args.userID
         viewModel.getPostsByUserID(userID)
+        viewModel.getUserByUserID(userID)
 
         viewModel.userPosts.observe(viewLifecycleOwner, {
             it?.let {
