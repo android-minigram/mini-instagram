@@ -10,7 +10,10 @@ import com.motawfik.minigram.data.FirebaseAuth
 import com.motawfik.minigram.databinding.ListItemPostBinding
 import com.motawfik.minigram.models.Post
 
-class TimelineAdapter(private val clickListener: PostListener) : ListAdapter<Post, TimelineAdapter.MyViewHolder>(PostDiffCallback()) {
+class TimelineAdapter(
+    private val clickListener: PostListener,
+    private val totalLikesListener: TotalLikesListener
+) : ListAdapter<Post, TimelineAdapter.MyViewHolder>(PostDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder.from(parent)
@@ -18,13 +21,15 @@ class TimelineAdapter(private val clickListener: PostListener) : ListAdapter<Pos
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, clickListener)
+        holder.bind(item, clickListener, totalLikesListener)
     }
 
-    class MyViewHolder private constructor(private val binding: ListItemPostBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Post, clickListener: PostListener) {
+    class MyViewHolder private constructor(private val binding: ListItemPostBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Post, clickListener: PostListener, totalLikesListener: TotalLikesListener) {
             binding.post = item
             binding.clickListener = clickListener
+            binding.totalLikesListener = totalLikesListener
             binding.executePendingBindings()
         }
 
@@ -38,7 +43,7 @@ class TimelineAdapter(private val clickListener: PostListener) : ListAdapter<Pos
     }
 }
 
-class PostDiffCallback: DiffUtil.ItemCallback<Post>() {
+class PostDiffCallback : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
         return oldItem.id == newItem.id
     }
@@ -59,5 +64,12 @@ class PostListener(val clickListener: (postID: String, authorID: String, like: B
         clickListener(post.id, post.uid, isPostLiked)
         return false
     }
-    fun onLikeButtonPressed(post: Post) = clickListener(post.id, post.uid, post.likedBy.contains(firebaseAuth.currentUserID()))
+
+    fun onLikeButtonPressed(post: Post) =
+        clickListener(post.id, post.uid, post.likedBy.contains(firebaseAuth.currentUserID()))
+}
+
+
+class TotalLikesListener(val totalLikesListener: (List<String>) -> Unit) {
+    fun onTotalLikesPressed(post: Post) = totalLikesListener(post.likedBy)
 }

@@ -12,6 +12,10 @@
         <variable
             name="clickListener"
             type="com.motawfik.minigram.timeline.PostListener" />
+
+        <variable
+            name="totalLikesListener"
+            type="com.motawfik.minigram.timeline.TotalLikesListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -88,6 +92,7 @@
             android:layout_marginBottom="12dp"
             android:textStyle="bold"
             app:numberOfLikes="@{post}"
+            android:onClick="@{() -> totalLikesListener.onTotalLikesPressed(post)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/likeButton"
             tools:text="43 Likes" />
