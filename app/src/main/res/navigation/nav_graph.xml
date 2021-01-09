@@ -40,6 +40,9 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_timelineFragment_to_likesFragment"
+            app:destination="@id/likesFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -57,4 +60,8 @@
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/likesFragment"
+        android:name="com.motawfik.minigram.likes.LikesFragment"
+        android:label="LikesFragment" />
 </navigation>
