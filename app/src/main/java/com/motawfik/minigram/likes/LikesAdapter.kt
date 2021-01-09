@@ -24,6 +24,7 @@ class LikesAdapter(private val clickListener: LikeListener) : ListAdapter<UserBa
 
         fun bind(user: UserBasicData, clickListener: LikeListener) {
             binding.user = user
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
 

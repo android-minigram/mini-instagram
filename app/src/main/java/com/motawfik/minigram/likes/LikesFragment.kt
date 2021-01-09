@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.request.RequestOptions
 import com.motawfik.minigram.GlideApp
@@ -32,7 +33,8 @@ class LikesFragment : Fragment() {
 
         val imageView = binding.selectedImage
         val adapter = LikesAdapter(LikeListener { userID ->
-            Log.d("LIKES_FRAGMENT", "CLICKED $userID")
+            val action = LikesFragmentDirections.actionLikesFragmentToProfileFragment(userID)
+            findNavController().navigate(action)
         })
         binding.likesList.adapter = adapter
         viewModel.users.observe(viewLifecycleOwner, {

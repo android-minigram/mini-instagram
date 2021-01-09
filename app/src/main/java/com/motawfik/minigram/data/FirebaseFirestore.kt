@@ -96,4 +96,10 @@ class FirebaseFirestore {
             .get().await()
         return postDoc.toObject(Post::class.java)
     }
+
+    suspend fun getPostsByUserID(userID: String): MutableList<Post> {
+        val postsDocs = firestore.collection("posts")
+            .whereEqualTo("uid", userID).get().await()
+        return postsDocs.toObjects(Post::class.java)
+    }
 }
