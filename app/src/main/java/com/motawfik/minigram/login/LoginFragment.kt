@@ -3,7 +3,6 @@ package com.motawfik.minigram.login
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.motawfik.minigram.R
 import com.motawfik.minigram.data.FACEBOOK_LOGIN_STATUS
+import com.motawfik.minigram.data.GOOGLE_LOGIN_STATUS
 import com.motawfik.minigram.data.LOGIN_STATUS
 import com.motawfik.minigram.databinding.LoginFragmentBinding
 import com.motawfik.minigram.viewModels.ViewModelFactory
@@ -75,21 +75,30 @@ class LoginFragment : Fragment() {
         loginViewModel!!.facebookLoginMessage.observe(viewLifecycleOwner, {
             if (loginViewModel!!.facebookStatus.value != FACEBOOK_LOGIN_STATUS.NONE) {
                 Toast.makeText(activity, it.toString(), Toast.LENGTH_LONG).show()
+                if (loginViewModel!!.facebookStatus.value == FACEBOOK_LOGIN_STATUS.SUCCESS)
+                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTimelineFragment())
                 loginViewModel!!.finishFacebookLogin()
+            }
+        })
+
+        loginViewModel!!.googleLoginMessage.observe(viewLifecycleOwner, {
+            if (loginViewModel!!.googleStatus.value != GOOGLE_LOGIN_STATUS.NONE) {
+                Toast.makeText(activity, it.toString(), Toast.LENGTH_LONG).show()
+                if (loginViewModel!!.googleStatus.value == GOOGLE_LOGIN_STATUS.SUCCESS)
+                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToTimelineFragment())
+                loginViewModel!!.finishLoggingWithGoogle()
             }
         })
 
         callbackManager = CallbackManager.Factory.create()
 
         loginBinding.facebookImgBtn.setOnClickListener {
-            Log.d("FACEBOOK_LOGIN", "BUTTON CLICKED")
             LoginManager.getInstance()
                 .logInWithReadPermissions(this, listOf("email", "public_profile"))
 
             LoginManager.getInstance()
                 .registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
                     override fun onSuccess(result: LoginResult) {
-                        Log.d("FACEBOOK_LOGIN", "SUCCESS")
                         loginViewModel!!.loginWithFacebook(result)
                     }
 

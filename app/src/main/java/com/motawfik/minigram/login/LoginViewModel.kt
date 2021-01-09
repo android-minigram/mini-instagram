@@ -1,18 +1,16 @@
 package com.motawfik.minigram.login
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.GoogleAuthProvider
 import com.motawfik.minigram.data.FACEBOOK_LOGIN_STATUS
 import com.motawfik.minigram.data.FirebaseAuth
+import com.motawfik.minigram.data.GOOGLE_LOGIN_STATUS
 import com.motawfik.minigram.data.LOGIN_STATUS
 import kotlinx.coroutines.*
 
@@ -55,6 +53,18 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    private var _googleStatus = MutableLiveData<GOOGLE_LOGIN_STATUS>()
+    val googleStatus: LiveData<GOOGLE_LOGIN_STATUS>
+        get() = _googleStatus
+
+    var googleLoginMessage = Transformations.map(_googleStatus) {
+        when (it) {
+            GOOGLE_LOGIN_STATUS.SUCCESS -> "LOGGED IN USING GOOGLE"
+            GOOGLE_LOGIN_STATUS.UNKNOWN_ERROR -> "UNKNOWN ERROR OCCURRED"
+            else -> ""
+        }
+    }
+
     private var _loginLoading = MutableLiveData<Boolean>()
     val loginLoading: LiveData<Boolean>
         get() = _loginLoading
@@ -74,11 +84,9 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     fun login() {
         uiScope.launch {
             _loginLoading.value = true
-            var status: LOGIN_STATUS
             withContext(Dispatchers.IO) {
-                status = firebaseAuth.loginWithEmailAndPassword(email.value!!, password.value!!)
+                _loggedIn.postValue(firebaseAuth.loginWithEmailAndPassword(email.value!!, password.value!!))
             }
-            _loggedIn.value = status
             _loginLoading.value = false
         }
     }
@@ -87,6 +95,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         _googleLogin.value = true
     }
     fun finishLoggingWithGoogle() {
+        _googleStatus.value = GOOGLE_LOGIN_STATUS.NONE
         _googleLogin.value = false
     }
 
@@ -97,7 +106,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     fun loginWithGoogle(task: Task<GoogleSignInAccount>) {
         uiScope.launch {
             withContext(Dispatchers.IO) {
-                firebaseAuth.loginWithGoogle(task)
+                _googleStatus.postValue(firebaseAuth.loginWithGoogle(task))
             }
         }
 
@@ -109,11 +118,9 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     fun loginWithFacebook(result: LoginResult) {
         uiScope.launch {
-            var status: FACEBOOK_LOGIN_STATUS
             withContext(Dispatchers.IO) {
-                status = firebaseAuth.loginWithFacebook(result.accessToken)
+                _facebookStatus.postValue(firebaseAuth.loginWithFacebook(result.accessToken))
             }
-            _facebookStatus.value = status
         }
     }
 }

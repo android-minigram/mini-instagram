@@ -18,6 +18,7 @@ import kotlinx.coroutines.tasks.await
 
 enum class LOGIN_STATUS { NONE, SUCCESS, NO_USER, INVALID_CREDENTIALS, UNKNOWN_ERROR };
 enum class FACEBOOK_LOGIN_STATUS { NONE, SUCCESS, DUPLICATE_EMAIL, UNKNOWN_ERROR };
+enum class GOOGLE_LOGIN_STATUS { NONE, SUCCESS, UNKNOWN_ERROR };
 enum class SIGNUP_STATUS { NONE, SUCCESS, DUPLICATE_EMAIL, MALFORMED_EMAIL, WEAK_PASSWORD, UNKNOWN_ERROR };
 
 class FirebaseAuth {
@@ -71,8 +72,8 @@ class FirebaseAuth {
         }
     }
 
-    suspend fun loginWithGoogle(task: Task<GoogleSignInAccount>) {
-        try {
+    suspend fun loginWithGoogle(task: Task<GoogleSignInAccount>): GOOGLE_LOGIN_STATUS {
+        return try {
             val account = task.getResult(ApiException::class.java)
             if (account != null) {
                 val credential = GoogleAuthProvider.getCredential(account.idToken, null)
@@ -86,11 +87,17 @@ class FirebaseAuth {
                                 "name" to account.displayName
                             )
                         )
+                    GOOGLE_LOGIN_STATUS.SUCCESS
+                } else {
+                    GOOGLE_LOGIN_STATUS.UNKNOWN_ERROR
                 }
+            } else {
+                GOOGLE_LOGIN_STATUS.UNKNOWN_ERROR
             }
         } catch (e: ApiException) {
             Log.d("GOOGLE_LOGIN", e.toString())
             Log.d("GOOGLE_LOGIN", e.printStackTrace().toString())
+            GOOGLE_LOGIN_STATUS.UNKNOWN_ERROR
         }
     }
 
