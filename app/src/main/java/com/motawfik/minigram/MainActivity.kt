@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                 channelId, channelName, NotificationManager.IMPORTANCE_HIGH
             )
             notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.RED
+            notificationChannel.lightColor = Color.BLUE
             notificationChannel.enableVibration(true)
             notificationChannel.description = "Likes gained by users"
 
