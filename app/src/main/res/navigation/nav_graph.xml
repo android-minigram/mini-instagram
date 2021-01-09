@@ -65,10 +65,7 @@
         android:name="com.motawfik.minigram.likes.LikesFragment"
         android:label="LikesFragment" >
         <argument
-            android:name="usersIDs"
-            app:argType="string[]" />
-        <argument
-            android:name="imagePath"
+            android:name="postID"
             app:argType="string" />
     </fragment>
 </navigation>

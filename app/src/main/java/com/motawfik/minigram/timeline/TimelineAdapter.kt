@@ -69,6 +69,6 @@ class PostListener(val clickListener: (postID: String, authorID: String, like: B
 }
 
 
-class TotalLikesListener(val totalLikesListener: (List<String>, imagePath: String) -> Unit) {
-    fun onTotalLikesPressed(post: Post) = totalLikesListener(post.likedBy, post.path)
+class TotalLikesListener(val totalLikesListener: (postID: String) -> Unit) {
+    fun onTotalLikesPressed(post: Post) = totalLikesListener(post.id)
 }

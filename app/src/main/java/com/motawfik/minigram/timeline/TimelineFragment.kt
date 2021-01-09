@@ -77,8 +77,8 @@ class TimelineFragment : Fragment() {
 
         val adapter = TimelineAdapter(PostListener { postID, authorID, isPostLiked ->
             viewModel.handleLikeButtonClicked(postID, authorID, isPostLiked)
-        }, TotalLikesListener { usersIDs, imagePath ->
-            val action = TimelineFragmentDirections.actionTimelineFragmentToLikesFragment(usersIDs.toTypedArray(), imagePath)
+        }, TotalLikesListener { postID ->
+            val action = TimelineFragmentDirections.actionTimelineFragmentToLikesFragment(postID)
             findNavController().navigate(action)
         })
         binding.postsList.adapter = adapter

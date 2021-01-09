@@ -27,19 +27,10 @@ class LikesFragment : Fragment() {
         val viewModel = LikesViewModel()
         binding.viewModel = viewModel
 
-        val usersIDs = args.usersIDs
-        val imagePath = args.imagePath
+        val postID = args.postID
+        viewModel.getPostByID(postID)
+
         val imageView = binding.selectedImage
-
-        GlideApp.with(imageView.context)
-            .load(storage.getPathReference(imagePath))
-            .apply(
-                RequestOptions()
-                .placeholder(R.drawable.loading_animation)
-                .error(R.drawable.ic_broken_image)).into(imageView)
-
-        viewModel.getUsersByIDs(usersIDs)
-
         val adapter = LikesAdapter(LikeListener { userID ->
             Log.d("LIKES_FRAGMENT", "CLICKED $userID")
         })
@@ -47,6 +38,18 @@ class LikesFragment : Fragment() {
         viewModel.users.observe(viewLifecycleOwner, {
             it?.let {
                 adapter.submitList(it)
+            }
+        })
+        viewModel.post.observe(viewLifecycleOwner, {
+            it?.let {
+                viewModel.getUsersByIDs(it.likedBy)
+                GlideApp.with(imageView.context)
+                    .load(storage.getPathReference(it.path))
+                    .apply(
+                        RequestOptions()
+                            .placeholder(R.drawable.loading_animation)
+                            .error(R.drawable.ic_broken_image)
+                    ).into(imageView)
             }
         })
 
