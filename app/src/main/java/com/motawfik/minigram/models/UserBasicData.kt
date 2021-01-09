@@ -1,18 +1,20 @@
 package com.motawfik.minigram.models
 
+import android.os.Parcelable
 import com.google.firebase.firestore.DocumentId
+import kotlinx.android.parcel.Parcelize
 
-class UserBasicData {
+@Parcelize
+class UserBasicData(): Parcelable {
     @DocumentId
     var uid = ""
-    var fullName = ""
+    var name = ""
 
-    constructor()
-    constructor(fullName: String) {
-        this.fullName = fullName
+    constructor(name: String) : this() {
+        this.name = name
     }
-    constructor(uid: String, fullName: String) {
+    constructor(uid: String, name: String) : this() {
         this.uid = uid
-        this.fullName = fullName
+        this.name = name
     }
 }

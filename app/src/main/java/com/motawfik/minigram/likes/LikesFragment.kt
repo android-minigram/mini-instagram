@@ -6,9 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
 import com.motawfik.minigram.databinding.FragmentLikesBinding
 
 class LikesFragment : Fragment() {
+    val args: LikesFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -20,14 +23,15 @@ class LikesFragment : Fragment() {
         val viewModel = LikesViewModel()
         binding.viewModel = viewModel
 
+        val usersIDs = args.usersIDs
+        viewModel.getUsersByIDs(usersIDs)
+
         val adapter = LikesAdapter(LikeListener { userID ->
             Log.d("LIKES_FRAGMENT", "CLICKED $userID")
         })
         binding.likesList.adapter = adapter
         viewModel.users.observe(viewLifecycleOwner, {
-            Log.d("LIKES_FRAGMENT", "LIST OBSERVED")
             it?.let {
-                Log.d("LIKES_FRAGMENT", "LIST NOT NULL")
                 adapter.submitList(it)
             }
         })

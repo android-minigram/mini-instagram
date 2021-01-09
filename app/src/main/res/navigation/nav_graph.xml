@@ -63,5 +63,9 @@
     <fragment
         android:id="@+id/likesFragment"
         android:name="com.motawfik.minigram.likes.LikesFragment"
-        android:label="LikesFragment" />
+        android:label="LikesFragment" >
+        <argument
+            android:name="usersIDs"
+            app:argType="string[]" />
+    </fragment>
 </navigation>

@@ -43,7 +43,7 @@ class LikeDiffCallback: DiffUtil.ItemCallback<UserBasicData>() {
     }
 
     override fun areContentsTheSame(oldItem: UserBasicData, newItem: UserBasicData): Boolean {
-        return oldItem.fullName == newItem.fullName
+        return oldItem.name == newItem.name
     }
 
 }

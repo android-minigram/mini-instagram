@@ -3,12 +3,14 @@ package com.motawfik.minigram.data
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.motawfik.minigram.models.Notification
 import com.motawfik.minigram.models.Post
+import com.motawfik.minigram.models.UserBasicData
 import kotlinx.coroutines.tasks.await
 
 class FirebaseFirestore {
@@ -77,5 +79,12 @@ class FirebaseFirestore {
             .update(hashMapOf<String, Any>(
                 "fcmToken" to FieldValue.delete()
             ))
+    }
+
+    suspend fun getUsersByIDs(usersIDs: Array<String>): List<UserBasicData> {
+        val documents = firestore.collection("users")
+            .whereIn(FieldPath.documentId(), usersIDs.asList())
+            .get().await()
+        return documents.toObjects(UserBasicData::class.java)
     }
 }
