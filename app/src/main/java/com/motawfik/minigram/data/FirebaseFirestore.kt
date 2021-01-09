@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.motawfik.minigram.models.Notification
@@ -38,13 +39,14 @@ class FirebaseFirestore {
     }
 
     private fun getPosts() {
-        firestore.collection("posts").addSnapshotListener { data, error ->
-            if (error != null) {
-                Log.w("SNAPSHOT_ERROR", error)
-                return@addSnapshotListener
+        firestore.collection("posts").orderBy("timestamp", Query.Direction.DESCENDING)
+            .addSnapshotListener { data, error ->
+                if (error != null) {
+                    Log.w("SNAPSHOT_ERROR", error)
+                    return@addSnapshotListener
+                }
+                _posts.value = data?.toObjects(Post::class.java)
             }
-            _posts.value = data?.toObjects(Post::class.java)
-        }
 
     }
 
@@ -56,13 +58,14 @@ class FirebaseFirestore {
         firestore.collection("notifications")
             .add(likeNotification.addToFirestore())
     }
+
     fun unlikePost(postID: String) {
         val currentUserID = firebaseAuth.currentUserID()
         firestore.collection("posts").document(postID)
             .update("likedBy", FieldValue.arrayRemove(firebaseAuth.currentUserID()))
         firestore.collection("notifications").whereEqualTo("postID", postID)
             .whereEqualTo("likedByUserID", currentUserID).get().addOnSuccessListener { documents ->
-                documents.forEach{
+                documents.forEach {
                     it.reference.delete()
                 }
             }
@@ -73,12 +76,15 @@ class FirebaseFirestore {
             .document(firebaseAuth.currentUserID()!!)
             .update("fcmToken", fcmToken)
     }
+
     fun deleteFCMToken() {
         firestore.collection("users")
             .document(firebaseAuth.currentUserID()!!)
-            .update(hashMapOf<String, Any>(
-                "fcmToken" to FieldValue.delete()
-            ))
+            .update(
+                hashMapOf<String, Any>(
+                    "fcmToken" to FieldValue.delete()
+                )
+            )
     }
 
     suspend fun getUsersByIDs(usersIDs: List<String>): List<UserBasicData> {
@@ -99,7 +105,8 @@ class FirebaseFirestore {
 
     suspend fun getPostsByUserID(userID: String): MutableList<Post> {
         val postsDocs = firestore.collection("posts")
-            .whereEqualTo("uid", userID).get().await()
+            .whereEqualTo("uid", userID)
+            .orderBy("timestamp", Query.Direction.DESCENDING).get().await()
         return postsDocs.toObjects(Post::class.java)
     }
 }
