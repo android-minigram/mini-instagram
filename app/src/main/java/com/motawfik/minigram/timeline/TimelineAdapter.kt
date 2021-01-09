@@ -1,6 +1,5 @@
 package com.motawfik.minigram.timeline
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -70,6 +69,6 @@ class PostListener(val clickListener: (postID: String, authorID: String, like: B
 }
 
 
-class TotalLikesListener(val totalLikesListener: (List<String>) -> Unit) {
-    fun onTotalLikesPressed(post: Post) = totalLikesListener(post.likedBy)
+class TotalLikesListener(val totalLikesListener: (List<String>, imagePath: String) -> Unit) {
+    fun onTotalLikesPressed(post: Post) = totalLikesListener(post.likedBy, post.path)
 }

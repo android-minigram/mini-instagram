@@ -3,6 +3,7 @@ package com.motawfik.minigram.timeline
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.request.RequestOptions
 import com.github.marlonlom.utilities.timeago.TimeAgo
 import com.google.firebase.Timestamp
 import com.motawfik.minigram.GlideApp
@@ -18,6 +19,10 @@ fun ImageView.bindImage(imgPath: String?) {
         val reference = storage.getPathReference(imgPath)
         GlideApp.with(this.context)
             .load(reference)
+            .apply(
+                RequestOptions()
+                    .placeholder(R.drawable.loading_animation)
+                    .error(R.drawable.ic_broken_image))
             .into(this)
     }
 }

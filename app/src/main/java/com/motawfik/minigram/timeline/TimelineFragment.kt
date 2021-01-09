@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -78,12 +77,9 @@ class TimelineFragment : Fragment() {
 
         val adapter = TimelineAdapter(PostListener { postID, authorID, isPostLiked ->
             viewModel.handleLikeButtonClicked(postID, authorID, isPostLiked)
-        }, TotalLikesListener { usersIDs ->
-            val action = TimelineFragmentDirections.actionTimelineFragmentToLikesFragment(usersIDs.toTypedArray())
+        }, TotalLikesListener { usersIDs, imagePath ->
+            val action = TimelineFragmentDirections.actionTimelineFragmentToLikesFragment(usersIDs.toTypedArray(), imagePath)
             findNavController().navigate(action)
-            usersIDs.forEach{
-                Log.d("USERS_IDS", it)
-            }
         })
         binding.postsList.adapter = adapter
         viewModel.posts.observe(viewLifecycleOwner, {

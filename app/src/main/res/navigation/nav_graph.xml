@@ -67,5 +67,8 @@
         <argument
             android:name="usersIDs"
             app:argType="string[]" />
+        <argument
+            android:name="imagePath"
+            app:argType="string" />
     </fragment>
 </navigation>

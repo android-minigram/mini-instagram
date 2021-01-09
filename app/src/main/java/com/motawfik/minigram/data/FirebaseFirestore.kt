@@ -82,9 +82,12 @@ class FirebaseFirestore {
     }
 
     suspend fun getUsersByIDs(usersIDs: Array<String>): List<UserBasicData> {
-        val documents = firestore.collection("users")
-            .whereIn(FieldPath.documentId(), usersIDs.asList())
-            .get().await()
-        return documents.toObjects(UserBasicData::class.java)
+        if (usersIDs.isNotEmpty()) {
+            val documents = firestore.collection("users")
+                .whereIn(FieldPath.documentId(), usersIDs.asList())
+                .get().await()
+            return documents.toObjects(UserBasicData::class.java)
+        }
+        return listOf()
     }
 }
