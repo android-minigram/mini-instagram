@@ -34,8 +34,10 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_logout -> {
-                firebaseFirestore.deleteFCMToken()
-                firebaseAuth.logout()
+                if (firebaseAuth.isLoggedIn()) {
+                    firebaseFirestore.deleteFCMToken()
+                    firebaseAuth.logout()
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
